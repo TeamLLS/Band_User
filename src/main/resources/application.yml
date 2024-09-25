@@ -1,0 +1,36 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  application:
+    name: band_authentication
+
+  jackson:
+    deserialization:
+      adjust-dates-to-context-time-zone: false
+    time-zone: Asia/Seoul
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/band
+    username: bander
+    password: band123
+
+  jpa:
+    hibernate:
+      ddl-auto: create #update update none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
