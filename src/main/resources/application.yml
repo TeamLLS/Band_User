@@ -9,7 +9,7 @@ server:
 
 spring:
   application:
-    name: band_authentication
+    name: band_user
 
   jackson:
     deserialization:
