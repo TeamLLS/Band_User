@@ -1,14 +1,19 @@
 package com.example.band_authentication.user;
 
 
+import com.example.band_authentication.external.oauth.UserInfo;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 import com.example.band_authentication.external.oauth.KakaoUserInfo;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
+@Getter
 @NoArgsConstructor
 public class User {
 
@@ -21,13 +26,15 @@ public class User {
 
     private String name;
     private String gender;
-    private int birthyear;
+    private Integer birthyear;
     private String phNum;
 
     private String description;
     private String image;
 
-    public User(KakaoUserInfo userInfo) {
+    private LocalDateTime createdAt;
+
+    public User(UserInfo userInfo) {
         this.username = userInfo.getProvider() + "_" + userInfo.getId();
         this.email = userInfo.getEmail();
         this.role = "NORMAL";
@@ -37,42 +44,7 @@ public class User {
         this.birthyear = userInfo.getBirthyear();
         this.description = null;
         this.image = null;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public String getPhNum() {
-        return phNum;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getImage() {
-        return image;
+        this.createdAt = LocalDateTime.now();
     }
 
     public void changeRole(String role){

@@ -1,5 +1,6 @@
 package com.example.band_authentication.user;
 
+import com.example.band_authentication.external.oauth.UserInfo;
 import com.example.band_authentication.external.redis.RedisService;
 import com.example.band_authentication.jwt.RefreshToken;
 import com.example.band_authentication.jwt.TokenRepository;
@@ -37,14 +38,16 @@ public class UserService {
 
         Map<String, Object> attributes = authenticator.getUserData(oauthToken);
 
-        User user = null;
+        UserInfo userInfo;
+        User user;
 
-        if (attributes != null) {
-            user = new User(new KakaoUserInfo(attributes));
+        if(authenticator.getProvider().equals("kakao")){
+            userInfo= new KakaoUserInfo(attributes);
         }else{
             throw new RuntimeException();
         }
 
+        user = new User(userInfo);
         userRepository.save(user);
 
         return user;

@@ -7,6 +7,11 @@ import java.util.Map;
 public class KakaoAuthenticator implements OauthAuthenticator{
 
     @Override
+    public String getProvider() {
+        return "kakao";
+    }
+
+    @Override
     public Map<String, Object> getUserData(String accessToken){
         WebClient webClient = WebClient.builder().build();
         String url = "https://kapi.kakao.com/v2/user/me";
