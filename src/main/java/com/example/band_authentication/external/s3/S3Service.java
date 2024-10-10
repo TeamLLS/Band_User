@@ -34,8 +34,6 @@ public class S3Service {
             if(image.isEmpty()){
                 return null;
             }
-//
-//            String objectKey = "users/" + username + "/profile." + getExtension(image.getOriginalFilename());
 
             String objectKey = buildFileName(group, subject, image.getOriginalFilename());
 
@@ -92,11 +90,8 @@ public class S3Service {
     private String buildFileName(String group, String subject, String originalFileName) {
         int fileExtensionIndex = originalFileName.lastIndexOf('.'); //파일 확장자 구분선
         String fileExtension = originalFileName.substring(fileExtensionIndex); //파일 확장자
-        //String fileName = originalFileName.substring(0, fileExtensionIndex); //파일 이름
-        //String now = String.valueOf(System.currentTimeMillis()); //파일 업로드 시간
+        String now = String.valueOf(System.currentTimeMillis()); //파일 업로드 시간
 
-        //return fileName + "_" + now + fileExtension;
-
-        return group + "/" + subject + fileExtension;
+        return group + "/" + subject + "_" + now + fileExtension;
     }
 }

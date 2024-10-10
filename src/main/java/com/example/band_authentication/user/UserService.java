@@ -96,7 +96,7 @@ public class UserService {
         User user = userRepository.findByUsername(username).orElseThrow();
 
         if(changeForm.isEmailChanged()){
-            String imageKey = s3Service.saveImage(username, "profile", changeForm.getImage());
+            String imageKey = s3Service.saveImage("users/" + username, "profile", changeForm.getImage());
             changeForm.setImageKey(imageKey);
         }
 
