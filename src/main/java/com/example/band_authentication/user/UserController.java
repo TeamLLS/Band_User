@@ -1,14 +1,13 @@
 package com.example.band_authentication.user;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Enumeration;
 import java.util.Map;
@@ -65,5 +64,24 @@ public class UserController {
         userService.logout(username);
 
         return ResponseEntity.ok().build();
+    }
+
+
+    @PatchMapping("/profile")
+    public ResponseEntity<?> changeUserInfo(@RequestHeader String username, @Validated @ModelAttribute UserInfoChangeForm changeForm){
+        userService.changeUserInfo(username, changeForm);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/profile/me")
+    public ResponseEntity<?> getMyInfo(@RequestHeader String username){
+
+        return ResponseEntity.ok().body(userService.getUserInfo(username));
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<?> getUserInfo(@RequestParam String username){
+
+        return ResponseEntity.ok().body(userService.getUserInfo(username));
     }
 }

@@ -2,37 +2,31 @@ package com.example.band_authentication.user;
 
 import com.example.band_authentication.external.oauth.UserInfo;
 import com.example.band_authentication.external.redis.RedisService;
+import com.example.band_authentication.external.s3.S3Service;
 import com.example.band_authentication.jwt.RefreshToken;
 import com.example.band_authentication.jwt.TokenRepository;
 import com.example.band_authentication.jwt.JwtUtils;
-import com.example.band_authentication.user.User;
 import com.example.band_authentication.external.oauth.KakaoAuthenticator;
 import com.example.band_authentication.external.oauth.KakaoUserInfo;
 import com.example.band_authentication.external.oauth.OauthAuthenticator;
-import com.example.band_authentication.user.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Year;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final TokenRepository tokenRepository;
     private final UserRepository userRepository;
     private final RedisService redisService;
     private final JwtUtils jwtUtils;
-
-
-    @Autowired
-    public UserService(TokenRepository tokenRepository, UserRepository userRepository, RedisService redisService, JwtUtils jwtUtils) {
-        this.tokenRepository = tokenRepository;
-        this.userRepository = userRepository;
-        this.redisService = redisService;
-        this.jwtUtils = jwtUtils;
-    }
-
+    private final S3Service s3Service;
 
     private User register(OauthAuthenticator authenticator, String oauthToken){
 
@@ -96,4 +90,26 @@ public class UserService {
         tokenRepository.deleteByUsername(username);
         redisService.deleteValue(username);
     }
+
+    @Transactional
+    public void changeUserInfo(String username, UserInfoChangeForm changeForm){
+        User user = userRepository.findByUsername(username).orElseThrow();
+
+        if(changeForm.isEmailChanged()){
+            String imageKey = s3Service.saveImage(username, "profile", changeForm.getImage());
+            changeForm.setImageKey(imageKey);
+        }
+
+        user.update(changeForm);
+    }
+
+    @Transactional(readOnly = true)
+    public UserInfoResponseForm getUserInfo(String username){
+        User user = userRepository.findByUsername(username).orElseThrow();
+
+        InputStreamResource imageResource = new InputStreamResource(s3Service.loadImage(user.getImage()));
+
+        return new UserInfoResponseForm(user, imageResource);
+    }
+
 }

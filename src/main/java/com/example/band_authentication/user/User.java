@@ -6,7 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
-import com.example.band_authentication.external.oauth.KakaoUserInfo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,8 +21,6 @@ public class User {
     private Long id;
     private String username;
     private String email;
-    private String role;
-
     private String name;
     private String gender;
     private Integer birthyear;
@@ -37,7 +34,6 @@ public class User {
     public User(UserInfo userInfo) {
         this.username = userInfo.getProvider() + "_" + userInfo.getId();
         this.email = userInfo.getEmail();
-        this.role = "NORMAL";
         this.name = userInfo.getName();
         this.gender = userInfo.getGender();
         this.phNum = userInfo.getPhone_number();
@@ -47,23 +43,19 @@ public class User {
         this.createdAt = LocalDateTime.now();
     }
 
-    public void changeRole(String role){
-        this.role = role;
-    }
+    public void update(UserInfoChangeForm changeForm){
 
-    public void changeDescription(String description){
-        this.description = description;
-    }
-
-    public void changeImage(String image){
-        this.image = image;
-    }
-
-    public void changeEmail(String email){
-        this.email = email;
-    }
-
-    public void changePhNum(String phNum){
-        this.phNum = phNum;
+        if(changeForm.isImageChanged()){
+            this.image = changeForm.getImageKey();
+        }
+        if(changeForm.isDescriptionChanged()){
+            this.description=changeForm.getDescription();
+        }
+        if(changeForm.isEmailChanged()){
+            this.email=changeForm.getEmail();
+        }
+        if(changeForm.isPhNumChanged()){
+            this.phNum= changeForm.getPhNum();
+        }
     }
 }
