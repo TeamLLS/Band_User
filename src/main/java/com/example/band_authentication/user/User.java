@@ -2,6 +2,7 @@ package com.example.band_authentication.user;
 
 
 import com.example.band_authentication.external.oauth.UserInfo;
+import com.example.band_authentication.user.form.UserInfoChangeForm;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -23,7 +24,7 @@ public class User {
     private String email;
     private String name;
     private String gender;
-    private Integer birthyear;
+    private Integer birthYear;
     private String phNum;
 
     private String description;
@@ -37,16 +38,16 @@ public class User {
         this.name = userInfo.getName();
         this.gender = userInfo.getGender();
         this.phNum = userInfo.getPhone_number();
-        this.birthyear = userInfo.getBirthyear();
+        this.birthYear = userInfo.getBirthyear();
         this.description = null;
-        this.image = null;
+        this.image = "common/profile/default.png";
         this.createdAt = LocalDateTime.now();
     }
 
     public void update(UserInfoChangeForm changeForm){
 
         if(changeForm.isImageChanged()){
-            this.image = changeForm.getImageKey();
+            this.image = changeForm.getImageResource();
         }
         if(changeForm.isDescriptionChanged()){
             this.description=changeForm.getDescription();

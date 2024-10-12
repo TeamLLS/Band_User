@@ -9,13 +9,16 @@ import com.example.band_authentication.jwt.JwtUtils;
 import com.example.band_authentication.external.oauth.KakaoAuthenticator;
 import com.example.band_authentication.external.oauth.KakaoUserInfo;
 import com.example.band_authentication.external.oauth.OauthAuthenticator;
+import com.example.band_authentication.user.form.SimpleUserInfoResponseForm;
+import com.example.band_authentication.user.form.UserInfoChangeForm;
+import com.example.band_authentication.user.form.UserInfoResponseForm;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.time.Year;
+import java.io.IOException;
+import java.time.Instant;
 import java.util.Map;
 
 @Service
@@ -95,9 +98,20 @@ public class UserService {
     public void changeUserInfo(String username, UserInfoChangeForm changeForm){
         User user = userRepository.findByUsername(username).orElseThrow();
 
-        if(changeForm.isEmailChanged()){
-            String imageKey = s3Service.saveImage("users/" + username, "profile", changeForm.getImage());
-            changeForm.setImageKey(imageKey);
+        String imageResource;
+        String group;
+        String subject;
+
+        if(changeForm.isImageChanged()){
+            if(changeForm.getImage()==null){
+                group = "common/profile";
+                subject = "default.png";
+            }else{
+                group = "users/" + username + "/profile";
+                subject = "profile";
+            }
+            imageResource = s3Service.saveImage(group, subject, changeForm.getImage());
+            changeForm.setImageResource(imageResource);
         }
 
         user.update(changeForm);
@@ -107,9 +121,23 @@ public class UserService {
     public UserInfoResponseForm getUserInfo(String username){
         User user = userRepository.findByUsername(username).orElseThrow();
 
-        InputStreamResource imageResource = new InputStreamResource(s3Service.loadImage(user.getImage()));
+        byte[] imageResource=null;
 
-        return new UserInfoResponseForm(user, imageResource);
+        try {
+            imageResource = s3Service.loadImage(user.getImage()).readAllBytes();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new UserInfoResponseForm(user/*, imageResource*/);
     }
+
+    @Transactional(readOnly = true)
+    public SimpleUserInfoResponseForm getSimpleUserInfo(String username){
+        User user = userRepository.findByUsername(username).orElseThrow();
+
+        return new SimpleUserInfoResponseForm(user);
+    }
+
 
 }

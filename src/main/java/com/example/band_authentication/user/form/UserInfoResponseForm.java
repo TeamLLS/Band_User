@@ -1,10 +1,9 @@
-package com.example.band_authentication.user;
+package com.example.band_authentication.user.form;
 
 
-import lombok.Builder;
+import com.example.band_authentication.user.User;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.core.io.InputStreamResource;
 
 import java.time.Year;
 
@@ -20,16 +19,17 @@ public class UserInfoResponseForm {
     private String phNum;
 
     private String description;
-    private InputStreamResource image;
+    private String image;
+    //private byte[] image;
 
-    public UserInfoResponseForm(User user, InputStreamResource image) {
+    public UserInfoResponseForm(User user/*, byte[] image*/) {
         this.username = user.getUsername();
         this.email = user.getEmail();
         this.name = user.getName();
         this.gender = user.getGender();
-        this.age = Year.now().getValue() - user.getBirthyear();
+        this.age = Year.now().getValue() - user.getBirthYear();
         this.phNum = user.getPhNum();
         this.description = user.getDescription();
-        this.image = image;
+        this.image = user.getImage();
     }
 }

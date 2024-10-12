@@ -8,10 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
-import software.amazon.awssdk.services.s3.model.GetObjectRequest;
-import software.amazon.awssdk.services.s3.model.GetObjectResponse;
-import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.model.*;
 
 import java.io.IOException;
 
@@ -21,6 +18,10 @@ public class S3Service {
 
     @Value("${spring.cloud.aws.s3.bucket}")
     private String bucket;
+
+    @Value("${spring.cloud.aws.cdn.url}")
+    private String production;
+
     private final S3Client s3Client;
 
     @Autowired
@@ -32,7 +33,7 @@ public class S3Service {
         try {
 
             if(image.isEmpty()){
-                return null;
+                return production + "/" + group + "/" + subject;
             }
 
             String objectKey = buildFileName(group, subject, image.getOriginalFilename());
@@ -45,7 +46,9 @@ public class S3Service {
                     .build();
             RequestBody requestBody = RequestBody.fromBytes(image.getBytes());
             s3Client.putObject(putObjectRequest, requestBody);
-            return objectKey;
+
+            return production + "/" + objectKey;
+            //return objectKey;
 
         } catch (IOException e) {
             e.printStackTrace();

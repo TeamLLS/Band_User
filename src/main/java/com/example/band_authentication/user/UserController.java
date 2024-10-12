@@ -1,11 +1,10 @@
 package com.example.band_authentication.user;
 
+import com.example.band_authentication.user.form.UserInfoChangeForm;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,20 +67,23 @@ public class UserController {
 
 
     @PatchMapping("/profile")
-    public ResponseEntity<?> changeUserInfo(@RequestHeader String username, @Validated @ModelAttribute UserInfoChangeForm changeForm){
+    public ResponseEntity<?> changeUserInfo(@RequestHeader String username, @ModelAttribute UserInfoChangeForm changeForm){
         userService.changeUserInfo(username, changeForm);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/profile/me")
     public ResponseEntity<?> getMyInfo(@RequestHeader String username){
-
         return ResponseEntity.ok().body(userService.getUserInfo(username));
     }
 
     @GetMapping("/profile")
     public ResponseEntity<?> getUserInfo(@RequestParam String username){
-
         return ResponseEntity.ok().body(userService.getUserInfo(username));
+    }
+
+    @GetMapping("/profile/simple")
+    public ResponseEntity<?> getUserSimpleInfo(@RequestParam String username){
+        return ResponseEntity.ok().body(userService.getSimpleUserInfo(username));
     }
 }

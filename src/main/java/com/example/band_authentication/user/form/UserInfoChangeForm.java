@@ -1,7 +1,6 @@
-package com.example.band_authentication.user;
+package com.example.band_authentication.user.form;
 
 
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +22,7 @@ public class UserInfoChangeForm {
 
     private boolean imageChanged;
     private MultipartFile image;
-    private String imageKey;
+    private String imageResource;
 
 
     public boolean isEmailChanged(){
