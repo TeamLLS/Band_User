@@ -76,14 +76,15 @@ header: {
 ## 응답
 ```
 body{
-  username: 사용자 id, (String)
+  userId: 사용자 id (Long)
+  username: 유저 네임 , (String)
   name: 사용자 이름, (String)
   age: 사용자 나이, (Integer)
   gender: 사용자 성별, (String)
   phNum: 사용자 번호, (String)
   email: 사용자 email, (String)
   description: 사용자 소개, (String)
-  image: 사용자 이미지 (byte[])
+  image: 사용자 이미지 url (String)
 }
 ```
 
@@ -98,15 +99,15 @@ header: {
 
 ### 응답
 ```
-body{
-  username: 사용자 id, (String)
+  userId: 사용자 id (Long)
+  username: 유저 네임 , (String)
   name: 사용자 이름, (String)
   age: 사용자 나이, (Integer)
   gender: 사용자 성별, (String)
   phNum: 사용자 번호, (String)
   email: 사용자 email, (String)
   description: 사용자 소개, (String)
-  image: 사용자 이미지 (byte[])
+  image: 사용자 이미지 url (String)
 }
 ```
 
