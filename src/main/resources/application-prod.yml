@@ -38,6 +38,8 @@ spring:
         static: ${S3_REGION}
       s3:
         bucket: ${S3_BUCKET}
+      cdn:
+        url: ${CDN_RUL}
 
   data:
     redis:

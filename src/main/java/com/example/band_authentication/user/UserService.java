@@ -98,20 +98,17 @@ public class UserService {
     public void changeUserInfo(String username, UserInfoChangeForm changeForm){
         User user = userRepository.findByUsername(username).orElseThrow();
 
-        String imageResource;
-        String group;
-        String subject;
+        String imageKey;
+
 
         if(changeForm.isImageChanged()){
-            if(changeForm.getImage()==null){
-                group = "common/profile";
-                subject = "default.png";
+            if(changeForm.getImage()==null || changeForm.getImage().isEmpty()){
+                imageKey = "common/profile/default.png";
             }else{
-                group = "users/" + username + "/profile";
-                subject = "profile";
+                imageKey = s3Service.saveImage("users/" + username + "/profile", "profile", changeForm.getImage());
             }
-            imageResource = s3Service.saveImage(group, subject, changeForm.getImage());
-            changeForm.setImageResource(imageResource);
+
+            changeForm.setImageResource(imageKey);
         }
 
         user.update(changeForm);
@@ -121,15 +118,17 @@ public class UserService {
     public UserInfoResponseForm getUserInfo(String username){
         User user = userRepository.findByUsername(username).orElseThrow();
 
-        byte[] imageResource=null;
+//        byte[] imageResource=null;
+//
+//        try {
+//            imageResource = s3Service.loadImage(user.getImage()).readAllBytes();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
 
-        try {
-            imageResource = s3Service.loadImage(user.getImage()).readAllBytes();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        String imageResource = s3Service.getProduction() + "/" + user.getImage();
 
-        return new UserInfoResponseForm(user/*, imageResource*/);
+        return new UserInfoResponseForm(user, imageResource/*, imageResource*/);
     }
 
     @Transactional(readOnly = true)

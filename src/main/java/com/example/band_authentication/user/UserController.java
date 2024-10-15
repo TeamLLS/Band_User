@@ -77,13 +77,13 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUserInfo(username));
     }
 
-    @GetMapping("/profile")
-    public ResponseEntity<?> getUserInfo(@RequestParam String username){
+    @GetMapping("/profile/{username}")
+    public ResponseEntity<?> getUserInfo(@PathVariable String username){
         return ResponseEntity.ok().body(userService.getUserInfo(username));
     }
 
-    @GetMapping("/profile/simple")
-    public ResponseEntity<?> getUserSimpleInfo(@RequestParam String username){
+    @GetMapping("/profile/{username}/simple")
+    public ResponseEntity<?> getUserSimpleInfo(@PathVariable String username){
         return ResponseEntity.ok().body(userService.getSimpleUserInfo(username));
     }
 }

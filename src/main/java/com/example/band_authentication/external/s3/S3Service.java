@@ -33,22 +33,21 @@ public class S3Service {
         try {
 
             if(image.isEmpty()){
-                return production + "/" + group + "/" + subject;
+                return null;
             }
 
-            String objectKey = buildFileName(group, subject, image.getOriginalFilename());
+            String imageKey = buildFileName(group, subject, image.getOriginalFilename());
 
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                     .bucket(bucket)
                     .contentType(image.getContentType())
                     .contentLength(image.getSize())
-                    .key(objectKey)
+                    .key(imageKey)
                     .build();
             RequestBody requestBody = RequestBody.fromBytes(image.getBytes());
             s3Client.putObject(putObjectRequest, requestBody);
 
-            return production + "/" + objectKey;
-            //return objectKey;
+            return imageKey;
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,15 +56,15 @@ public class S3Service {
     }
 
 
-    public ResponseInputStream<GetObjectResponse> loadImage(String objectKey){
+    public ResponseInputStream<GetObjectResponse> loadImage(String imageKey){
 
-        if(objectKey==null){
+        if(imageKey==null){
             return null;
         }
 
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()
                 .bucket(bucket)
-                .key(objectKey)
+                .key(imageKey)
                 .build();
 
         ResponseInputStream<GetObjectResponse> imageObject = s3Client.getObject(getObjectRequest);
@@ -75,18 +74,22 @@ public class S3Service {
         return imageObject;
     }
 
-    public void deleteImage(String objectKey){
+    public void deleteImage(String imagKey){
 
-        if(objectKey==null){
+        if(imagKey==null){
             return;
         }
 
         DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
                 .bucket(bucket)
-                .key(objectKey)
+                .key(imagKey)
                 .build();
 
         s3Client.deleteObject(deleteObjectRequest);
+    }
+
+    public String getProduction(){
+        return this.production;
     }
 
 

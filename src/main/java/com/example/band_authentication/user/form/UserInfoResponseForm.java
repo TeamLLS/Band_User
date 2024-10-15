@@ -11,6 +11,7 @@ import java.time.Year;
 @Setter
 public class UserInfoResponseForm {
 
+    private Long userId;
     private String username;
     private String email;
     private String name;
@@ -22,7 +23,8 @@ public class UserInfoResponseForm {
     private String image;
     //private byte[] image;
 
-    public UserInfoResponseForm(User user/*, byte[] image*/) {
+    public UserInfoResponseForm(User user, String imageResource/*, byte[] image*/) {
+        this.userId = user.getId();
         this.username = user.getUsername();
         this.email = user.getEmail();
         this.name = user.getName();
@@ -30,6 +32,8 @@ public class UserInfoResponseForm {
         this.age = Year.now().getValue() - user.getBirthYear();
         this.phNum = user.getPhNum();
         this.description = user.getDescription();
-        this.image = user.getImage();
+        this.image = imageResource;
+        //this.image = user.getImage();
+        //this.image = image;
     }
 }
