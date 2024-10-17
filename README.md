@@ -6,9 +6,9 @@
 
 
 ## ▶로그인
-### GET /user/login
+### POST /user/login
 ```
-header : {  
+header: {  
   token: Bearer ${Oauth accessToken value},
   provider: ${oauth provider} (=kakao)     
 }      
@@ -24,9 +24,9 @@ body: {
 
 
 ## ▶accessToken 재발급 
-### GET /user/refresh
+### POST /user/refresh
 ```
-header :{
+header: {
   token: ${refreshToken value}
 }
 ```
@@ -41,7 +41,7 @@ body: {
 
 
 ## ▶로그아웃
-### GET /user/logout
+### DELETE /user/logout
 ```
 header: {
   accessToken: ${accessToken value}
@@ -75,7 +75,7 @@ header: {
 
 ## 응답
 ```
-body{
+body: {
   userId: 사용자 id (Long)
   username: 유저 네임 , (String)
   name: 사용자 이름, (String)
@@ -115,11 +115,11 @@ header: {
 ## ▶프로필 변경
 ### PATCH /user/profile
 ```
-header:{
+header: {
   accessToken: ${accessToken value}
 }
 
-form-data:{
+form-data: {
   email: 변경 email, (String)
   emailChanged: email 변경 여부, (Boolean, true or false) 
   phNum: 변경 번호, (String)
