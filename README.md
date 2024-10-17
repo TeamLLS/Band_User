@@ -121,13 +121,13 @@ header:{
 
 form-data:{
   email: 변경 email, (String)
-  emailChanged: email 변경 여부, (boolean) 
+  emailChanged: email 변경 여부, (Boolean, true or false) 
   phNum: 변경 번호, (String)
-  phNumChanged: 번호 변경 여부, (boolean)
+  phNumChanged: 번호 변경 여부, (Boolean, true or false) 
   description: 변경 설명, (String)
-  descriptionChanged: 설명 변경 여부, (boolean)
+  descriptionChanged: 설명 변경 여부, (Boolean, true or false) 
   image: 변경 이미지, (이미지 파일)
-  imageChanged: 이미지 변경 여부 (boolean)
+  imageChanged: 이미지 변경 여부 (Boolean, true or false) 
 }
 ```
 
