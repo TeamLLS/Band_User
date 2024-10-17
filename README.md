@@ -90,7 +90,7 @@ body{
 
 
 ## ▶프로필 조회
-### GET /user/profile/me?username=${대상 useranme}
+### GET /user/profile/{대상 username}
 ```
 header: {
   accessToken: ${accessToken value}
