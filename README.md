@@ -77,7 +77,7 @@ header: {
 ```
 body: {
   userId: 사용자 id (Long)
-  username: 유저 네임 , (String)
+  username: 유저 네임, (String)
   name: 사용자 이름, (String)
   age: 사용자 나이, (Integer)
   gender: 사용자 성별, (String)
@@ -100,7 +100,7 @@ header: {
 ### 응답
 ```
   userId: 사용자 id (Long)
-  username: 유저 네임 , (String)
+  username: 유저 네임, (String)
   name: 사용자 이름, (String)
   age: 사용자 나이, (Integer)
   gender: 사용자 성별, (String)
