@@ -53,4 +53,4 @@ band_user
 
 
 # 4. ERD
-![band_user](https://github.com/user-attachments/assets/efd8e7b8-8485-4a1a-aafa-79e7f7f81318)
+![a1](https://github.com/user-attachments/assets/a5448959-e542-433d-b61c-ee36411b73a3)
