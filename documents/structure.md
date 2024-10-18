@@ -16,7 +16,7 @@ band_user
 |--------|------|------|------|------|
 |User    |      |      |      |      |
 |        |id|Long|User Id|Primary Key|
-|        |username|String|username|User 추적키, NotNull|
+|        |username|String|username|NotNull|
 |        |email|String|이메일||
 |        |phNum|String|전화 번호||
 |        |image|String|이미지 리소스 url||
@@ -32,7 +32,7 @@ band_user
 |--------|------|------|------|------|
 |refreshToken|      |      |      |      |
 |            |id|Long|refreshToken Id||
-|            |username|String|username||
+|            |username|String|username|User 추적키|
 |            |token|String|token 밸류|JWT|
 
 
