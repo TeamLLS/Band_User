@@ -7,9 +7,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,8 +22,12 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
+
+    @NotNull
     private String username;
     private String email;
+
+    @NotNull
     private String name;
     private String gender;
     private Integer birthYear;
@@ -30,7 +36,7 @@ public class User {
     private String description;
     private String image;
 
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
     public User(UserInfo userInfo) {
         this.username = userInfo.getProvider() + "_" + userInfo.getId();
@@ -41,7 +47,7 @@ public class User {
         this.birthYear = userInfo.getBirthyear();
         this.description = null;
         this.image = "common/profile/default.png";
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = Instant.now();
     }
 
     public void update(UserInfoChangeForm changeForm){

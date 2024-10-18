@@ -15,10 +15,7 @@ import com.example.band_authentication.user.form.UserInfoResponseForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.time.Instant;
 import java.util.Map;
 
 @Service
@@ -99,8 +96,6 @@ public class UserService {
         User user = userRepository.findByUsername(username).orElseThrow();
 
         String imageKey;
-
-
         if(changeForm.isImageChanged()){
             if(changeForm.getImage()==null || changeForm.getImage().isEmpty()){
                 imageKey = "common/profile/default.png";

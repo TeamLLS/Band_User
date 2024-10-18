@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Enumeration;
@@ -44,21 +43,22 @@ public class UserController {
     }
 
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestHeader String token, @RequestHeader String provider){
         Map<String,String> tokens = userService.login(token, provider);
 
         return ResponseEntity.ok().body(tokens);
     }
 
-    @GetMapping("/refresh")
+    @PostMapping("/refresh")
     public ResponseEntity<?> refresh(@RequestHeader String token){
+
         Map<String, String> tokens = userService.refresh(token);
 
         return ResponseEntity.ok().body(tokens);
     }
 
-    @GetMapping("/logout")
+    @DeleteMapping("/logout")
     public ResponseEntity<?> logout(@RequestHeader String username){
         userService.logout(username);
 

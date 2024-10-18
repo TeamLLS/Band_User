@@ -11,33 +11,33 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 public class UserInfoChangeForm {
 
-    private boolean emailChanged;
+    private Boolean emailChanged;
     private String email;
 
-    private boolean phNumChanged;
+    private Boolean phNumChanged;
     private String phNum;
 
-    private boolean descriptionChanged;
+    private Boolean descriptionChanged;
     private String description;
 
-    private boolean imageChanged;
+    private Boolean imageChanged;
     private MultipartFile image;
     private String imageResource;
 
 
     public boolean isEmailChanged(){
-        return this.emailChanged;
+        return (emailChanged!=null)?emailChanged:false;
     }
 
     public boolean isPhNumChanged(){
-        return this.phNumChanged;
+        return (phNumChanged!=null)?phNumChanged:false;
     }
 
     public boolean isDescriptionChanged(){
-        return this.descriptionChanged;
+        return (descriptionChanged!=null)?descriptionChanged:false;
     }
 
     public boolean isImageChanged(){
-        return this.imageChanged;
+        return (imageChanged!=null?emailChanged:false);
     }
 }

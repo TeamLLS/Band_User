@@ -8,7 +8,6 @@ import lombok.Setter;
 import java.time.Year;
 
 @Getter
-@Setter
 public class UserInfoResponseForm {
 
     private Long userId;
