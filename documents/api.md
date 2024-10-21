@@ -1,5 +1,15 @@
-
 # API 
+
+ 
+| API | 설명 | DB |  
+|-----|------|----|
+|로그인|서비스 로그인 or 회원가입 진행|User & refreshToken 생성|      
+|access token 재발급|로그인 연장 목적 토큰 재발급|refreshToken 삭제 & 생성|
+|로그아웃|서비스 로그아웃|refreshToken 삭제|
+|내 프로필 조회|로그인 User 정보 반환||
+|프로필 조회|대상 User 정보반환||
+|프로필 변경|로그인 유저 프로필 정보 변경|User 변경|
+
 
 ## 서버 상태 
 ### GET /user/heahth_check
