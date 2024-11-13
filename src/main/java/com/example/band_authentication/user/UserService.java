@@ -95,12 +95,17 @@ public class UserService {
     public void changeUserInfo(String username, UserInfoChangeForm changeForm){
         User user = userRepository.findByUsername(username).orElseThrow();
 
+        System.out.println(changeForm.getImage());
+        System.out.println(changeForm.getImage().isEmpty());
+
         String imageKey;
         if(changeForm.isImageChanged()){
             if(changeForm.getImage()==null || changeForm.getImage().isEmpty()){
+                System.out.println("why?");
                 imageKey = "common/profile/default.png";
             }else{
-                imageKey = s3Service.saveImage("users/" + username + "/profile", "profile", changeForm.getImage());
+                System.out.println("why2?");
+                imageKey = s3Service.saveImage("user/" + username + "/profile", "profile", changeForm.getImage());
             }
 
             changeForm.setImageResource(imageKey);

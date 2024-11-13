@@ -1,7 +1,6 @@
 package com.example.band_authentication.user.form;
 
 import com.example.band_authentication.user.User;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter

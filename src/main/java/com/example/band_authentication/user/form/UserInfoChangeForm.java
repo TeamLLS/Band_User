@@ -38,6 +38,6 @@ public class UserInfoChangeForm {
     }
 
     public boolean isImageChanged(){
-        return (imageChanged!=null?emailChanged:false);
+        return (imageChanged!=null?imageChanged:false);
     }
 }

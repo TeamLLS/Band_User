@@ -5,7 +5,10 @@ import com.example.band_authentication.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Instant;
 import java.time.Year;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @Getter
 public class UserInfoResponseForm {
@@ -20,6 +23,8 @@ public class UserInfoResponseForm {
 
     private String description;
     private String image;
+
+    private ZonedDateTime time;
     //private byte[] image;
 
     public UserInfoResponseForm(User user, String imageResource/*, byte[] image*/) {
@@ -32,6 +37,7 @@ public class UserInfoResponseForm {
         this.phNum = user.getPhNum();
         this.description = user.getDescription();
         this.image = imageResource;
+        this.time = Instant.now().atZone(ZoneId.of("Asia/Seoul"));
         //this.image = user.getImage();
         //this.image = image;
     }
